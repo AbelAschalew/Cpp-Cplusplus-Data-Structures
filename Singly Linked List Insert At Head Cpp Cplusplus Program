@@ -1,0 +1,43 @@
+/* Dear Fellow Programmers I Hope You 
+Find This & Other Programs I Released 
+Helpful. Nothing Pleasure Me Morethan 
+Helping Others. I Expect Only One Thing 
+From You, Show Your Support By Giving a 
+Star For This Repository If You Found 
+These Program/Programs Beneficial. 
+Thank You!*/
+
+#include <iostream>
+using namespace std;
+
+struct node {
+	int x;
+	node* next;
+};
+
+node* head = NULL;
+
+void insAtHead () {
+	head = new node;
+	head->x = 10;
+	head->next = NULL;
+	node* nhead = new node;
+	cout << "Enter Item:" << endl;
+	cin >> nhead->x;
+	nhead->next = head;
+	head = nhead;
+}
+
+void display () {
+	node* dis = head;
+	while (dis != NULL) {
+		cout << dis->x << "  ";
+		dis = dis->next;
+	}
+	cout << endl;
+}
+
+int main () {
+	insAtHead();
+	display();
+}
