@@ -1,0 +1,58 @@
+/* Dear Fellow Programmers I Hope You Find
+This & Other Programs I Released Helpful. 
+Nothing Pleasure Me Morethan Helping Others. 
+I Expect Only One Thing From You, Show Your
+Support By Giving a Star For This Repository If You Found These 
+Program/Programs Beneficial. Thank You!*/
+
+#include <iostream>
+using namespace std;
+
+struct node {
+	int x;
+	node* next;
+};
+
+node* head = NULL;
+
+void deleteHead () {
+	head = new node;
+	head->x = 10;
+	node* n1 = new node;
+	n1->x = 20;
+	head->next = n1;
+	node* n2 = new node;
+	n2->x = 30;
+	n1->next = n2;
+	node* tail = new node;
+	tail->x = 40;
+	n2->next = tail;
+	tail->next = NULL;
+	
+	char Q;
+	cout << "Delete Head? (\"Y\"/\"N\"):" << endl;
+	cin >> Q;
+	if (Q=='N' || Q=='n') {
+		cout << "Delete Canceled!" << endl;
+		return;
+	} else {
+		node* nhead = head;
+		head = head->next;
+		delete nhead;
+		cout << "Successfully Deleted!" << endl;
+	}
+}
+
+void display () {
+	node* dis = head;
+	while (dis != NULL) {
+		cout << dis->x << "  ";
+		dis = dis->next;
+	}
+	cout << endl;
+}
+
+int main () {
+	deleteHead();
+	display();
+}
