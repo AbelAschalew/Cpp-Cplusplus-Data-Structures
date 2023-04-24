@@ -1,0 +1,86 @@
+/* Dear Fellow Programmers I Hope You Find 
+This & Other Programs I Released Helpful. 
+Nothing Pleasure Me Morethan Helping Others. 
+I Expect Only One Thing From You, Show Your 
+Support By Giving a Star For This 
+Repository If You Found These 
+Program/Programs Beneficial. Thank You!*/
+
+#include <iostream>
+using namespace std;
+
+struct node {
+	int x;
+	node* next;
+};
+
+node* head = NULL;
+
+void storeNodes() {
+	head = new node;
+	head->x = 10;
+	node* n1 = new node;
+	n1->x = 20;
+	head->next = n1;
+	node* n2 = new node;
+	n2->x = 30;
+	n1->next = n2;
+	node* tail = new node;
+	tail->x = 40;
+	n2->next = tail;
+	tail->next = NULL;
+}
+
+void replaceAnyItem () {
+	int rn;
+	cout << "Enter Item To Be Repalaced:" << endl;
+	cin >> rn;
+	
+	node* search = head;
+	node* prev = NULL;
+	while (search != NULL) {
+		if (search->x == rn) {
+		   break;
+	   }
+	   prev = search;
+	   search = search->next;
+	}
+	if (search == NULL) {
+		cout << "Item Not Found!" << endl;
+	} else {
+		node* nitem = new node;
+		cout << "Enter New Item:" << endl;
+		cin >> nitem->x;
+		if (search == head) {
+			node* temp = head;
+			nitem->next = head->next;
+			head = nitem;
+			delete temp;
+		} else if (search->next == NULL){
+			node* temp = search;
+			prev->next = nitem;
+			nitem->next = NULL;
+			delete temp;
+		} else {
+			node* temp = search;
+			prev->next = nitem;
+			nitem->next = search->next;
+			delete temp;
+		}
+	}
+}
+
+void display () {
+	node* dis = head;
+	while (dis != NULL) {
+		cout << dis->x << "  ";
+		dis = dis->next;
+	}
+	cout << endl;
+}
+
+int main () {
+	storeNodes();
+	replaceAnyItem();
+	display();
+}
