@@ -15,7 +15,7 @@ struct node {
 
 node* head = NULL;
 
-void deleteHead () {
+void storeNodes () {
 	head = new node;
 	head->x = 10;
 	node* n1 = new node;
@@ -28,7 +28,9 @@ void deleteHead () {
 	tail->x = 40;
 	n2->next = tail;
 	tail->next = NULL;
-	
+}
+
+void deleteHead () {
 	char Q;
 	cout << "Delete Head? (\"Y\"/\"N\"):" << endl;
 	cin >> Q;
@@ -53,6 +55,7 @@ void display () {
 }
 
 int main () {
+	storeNodes();
 	deleteHead();
 	display();
 }
