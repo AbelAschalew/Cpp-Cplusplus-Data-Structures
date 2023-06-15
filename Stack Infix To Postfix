@@ -1,0 +1,72 @@
+
+
+#include <iostream>
+using namespace std;
+
+char infix[100];
+char stack[50];
+int top = -1;
+
+void pop () {
+	if (top > -1) {
+		top--;
+	}
+}
+
+void push () {
+	top++;
+}
+
+bool isOperator (char c) {
+	if (c=='+' || c=='-' || c=='*' || c=='/') {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+int precedence (char op) {
+	switch (op) {
+		case '+':
+			return 1;
+		case '-':
+			return 1;
+		case '*':
+			return 2;
+		case '/':
+			return 2;
+	}
+}
+
+int main () {
+	cout << "Enter Infix Expression:" << endl;
+	cin >> infix;
+	int i = 0;
+	
+	while (infix[i]!='\0') {
+		if (! isOperator(infix[i])) {
+			cout << infix[i];
+		} else {
+			if (top == -1) {
+				push();
+				stack[top] = infix[i];
+			} else if (precedence(infix[i]) > precedence(stack[top])) {
+				push();
+				stack[top] = infix[i];
+			} else {
+				cout << stack[top];
+				pop();
+				push();
+				stack[top] = infix[i];
+			}
+		}
+		i++;
+	}
+	
+	while (top != -1) {
+		cout << stack[top];
+		pop();
+	}
+	
+	system("pause");
+}
