@@ -1,0 +1,333 @@
+/* Dear Fellow Programmers I Hope You Find 
+This & Other Programs I Released Helpful. 
+Nothing Pleasure Me Morethan Helping Others. 
+I Expect Only One Thing From You, Show Your
+Support By Giving a Star For This 
+Repository If You Found These 
+Program/Programs Beneficial. Thank You!*/
+
+#include <iostream>
+using namespace std;
+
+struct node {
+	int x;
+	node* next;
+	node* previous;
+};
+
+node* head = NULL;
+
+void display () {
+	cout << endl;
+	if (head == NULL) {
+		cout << "List Is Empty!" << endl;
+	} else {
+		node* dis = head;
+		while (dis != NULL) {
+			cout << dis->x << "  ";
+			dis = dis->next;
+		}
+		cout << endl;
+	}
+	cout << endl;
+}
+
+void insertAtHead () {
+	cout << endl;
+	if (head == NULL) {
+		head = new node;
+		cout << "Enter Head:" << endl;
+		cin >> head->x;
+		head->previous = NULL;
+		head->next = NULL;
+	} else {
+		node* temp = new node;
+		cout << "Enter New Head:" << endl;
+		cin >> temp->x;
+		temp->previous = NULL;
+		temp->next = head;
+		head->previous = temp;
+		head = temp;
+	}
+	cout << endl << "Head Successfully Inserted!" << endl;
+	cout << endl;
+}
+
+void replaceHead () {
+	cout << endl;
+	if (head == NULL) {
+		cout << "List Is Empty!" << endl;
+	} else {
+		node* temp = new node;
+		cout << "Enter Replace Head:" << endl;
+		cin >> temp->x;
+		temp->previous = NULL;
+		temp->next = head->next;
+		head->next->previous = temp;
+		node* dl = head;
+		head = temp;
+		delete dl;
+		cout << endl << "Head Successfully Replaced!" << endl;
+	}
+	cout << endl;
+}
+
+void deleteHead () {
+	if (head == NULL) {
+		cout << "List Is Empty!" << endl;
+	} else {
+		char Q;
+		cout << "Delete Head? ('Y'/'N'):" << endl;
+		cin >> Q;
+		if (Q=='N' || Q=='n') {
+			cout << "Delete Canceled!" << endl;
+			return;
+		} else if (Q=='Y' || Q=='y') {
+			node* temp = head;
+			head = head->next;
+			head->previous = NULL;
+			delete temp;
+			cout << "Head Successfully Deleted!" << endl;
+		} else {
+			cout << "Invalid Answer!" << endl;
+			return;
+		}
+	}
+}
+
+void insertAtTail () {
+	if (head == NULL) {
+		cout << "List Is Empty!" << endl;
+	} else {
+		node* temp = new node;
+		cout << "Enter Item To Be Inserted After Tail:" << endl;
+		cin >> temp->x;
+		node* search = head;
+		while (search->next != NULL) {
+			search = search->next;
+		}
+		search->next = temp;
+		temp->previous = search;
+		temp->next = NULL;
+	}
+}
+
+void replaceTail () {
+	if (head == NULL) {
+		cout << "List Is Empty!" << endl;
+	} else {
+		node* temp = new node;
+		cout << "Enter Item To Replace Tail:" << endl;
+		cin >> temp->x;
+		temp->next = NULL;
+		node* search = head;
+		while (search->next != NULL) {
+			search = search->next;
+		}
+		search->previous->next = temp;
+		temp->previous = search->previous;
+		delete search;
+		cout << "Tail Successfully Replaced!" << endl;
+	}
+}
+
+void deleteTail () {
+	if (head == NULL) {
+		cout << "List Is Empty!" << endl;
+	} else {
+		char Q;
+	cout << "Delete Tail? ('Y'/'N'):" << endl;
+	cin >> Q;
+	if (Q=='N' || Q=='n') {
+		cout << "Delete Canceled!" << endl;
+		return;
+	} else if (Q=='Y' || Q=='y') {
+		node* search = head;
+		while (search->next != NULL) {
+			search = search->next;
+		}
+		search->previous->next = NULL;
+		delete search;
+		cout << "Tail Successfully Deleted!" << endl;
+	} else {
+		cout << "Invalid Answer!" << endl;
+		return;
+	}
+	}
+}
+
+void insertAfterItem () {
+	cout << endl;
+	if (head == NULL) {
+		cout << "List Is Empty!" << endl;
+	} else {
+		int sit;
+		cout << "Enter Search Item:" << endl;
+		cin >> sit;
+		node* search = head;
+		while (search != NULL) {
+			if (search->x == sit) {
+				break;
+			}
+			search = search->next;
+		}
+		if (search == NULL) {
+			cout << "Item Not Found!" << endl;
+		} else {
+			node* temp = new node;
+			cout << "Enter Item To Be Inserted After" << search->x << ":" << endl;
+			cin >> temp->x;
+			temp->previous = search;
+			temp->next = search->next;
+			search->next->previous = temp;
+			search->next = temp;
+			cout << endl << "Item Successfully Inserted!" << endl;
+		}
+	}
+	cout << endl;
+}
+
+void replaceItem () {
+	cout << endl;
+	if (head == NULL) {
+		cout << "List Is Empty!" << endl;
+	} else {
+		int sit;
+		cout << "Enter Search Item:" << endl;
+		cin >> sit;
+		node* search = head;
+		while (search != NULL) {
+			if (search->x == sit) {
+				break;
+			}
+			search = search->next;
+		}
+		if (search == NULL) {
+			cout << "Item Not Found!" << endl;
+		} else {
+			node* temp = new node;
+			cout << "Enter Replace Item:" << endl;
+			cin >> temp->x;
+			if (search == head) {
+				temp->previous = NULL;
+				temp->next = head->next;
+				head->next->previous = temp;
+				head = temp;
+			} else if (search->next == NULL) {
+				temp->next = NULL;
+				temp->previous = search->previous;
+				search->previous->next = temp;
+			} else {
+				temp->previous = search->previous;
+				temp->next = search->next;
+				search->next->previous = temp;
+				search->previous->next = temp;
+			}
+			delete search;
+			cout << endl << "Item Successfully Replaced!" << endl;
+		}
+	}
+	cout << endl;
+}
+
+void deleteItem () {
+	if (head == NULL) {
+		cout << "List Is Empty!" << endl;
+	} else {
+		int sit;
+		cout << "Enter Search Item To Be Deleted:" << endl;
+		cin >> sit;
+		node* search = head;
+		while (search != NULL) {
+			if (search->x == sit) {
+				break;
+			}
+			search = search->next;
+		}
+		if (search == NULL) {
+			cout << "Item Not Found!" << endl;
+			return;
+		} else {
+			char Q;
+			cout << "Delete " << sit << "? ('Y'/'N'):" << endl;
+			cin >> Q;
+			if (Q=='N' || Q=='n') {
+				cout << "Delete Canceled!" << endl;
+				return;
+			} else if (Q=='Y' || Q=='y') {
+				if (search == head) {
+					head = head->next;
+					head->previous = NULL;
+				} else if (search->next == NULL) {
+					search->previous->next = NULL;
+				} else {
+					search->previous->next = search->next;
+					search->next->previous = search->previous;
+				}
+				delete search;
+				cout << "Item Successfully Deleted!" << endl;
+			} else {
+				cout << "Invalid Answer!" << endl;
+				return;
+			}
+		}
+	}
+}
+
+int main () {
+	int c;
+	
+	do {
+		cout << "1. Display" << endl;
+		cout << "2. Insert At Head" << endl;
+		cout << "3. Replace Head" << endl;
+		cout << "4. Delete Head" << endl;
+		cout << "5. Insert At Tail" << endl;
+		cout << "6. Replace Tail" << endl;
+		cout << "7. Delete Tail" << endl;
+		cout << "8. Insert After Item" << endl;
+		cout << "9. Replace Item" << endl;
+		cout << "10. Delete Item" << endl;
+		cout << "11. EXIT" << endl;
+		cout << "Enter Your Choice:" << endl;
+		cin >> c;
+		
+		switch (c) {
+			case 1:
+				display();
+				break;
+			case 2:
+				insertAtHead();
+				break;
+			case 3:
+				replaceHead();
+				break;
+			case 4:
+				deleteHead();
+				break;
+			case 5:
+				insertAtTail();
+				break;
+			case 6:
+				replaceTail();
+				break;
+			case 7:
+				deleteTail();
+				break;
+			case 8:
+				insertAfterItem();
+				break;
+			case 9:
+				replaceItem();
+				break;
+			case 10:
+				deleteItem();
+				break;
+			case 11:
+				cout << endl << endl << "EXITED!" << endl;
+				break;
+			default:
+				cout << endl << endl << "Invalid Choice!" << endl << endl;
+		}
+	} while (c != 11);
+}
