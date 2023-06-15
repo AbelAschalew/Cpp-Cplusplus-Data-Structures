@@ -1,0 +1,90 @@
+/* Dear Fellow Programmers I Hope You Find 
+This & Other Programs I Released Helpful. 
+Nothing Pleasure Me Morethan Helping Others. 
+I Expect Only One Thing From You, Show Your
+Support By Giving a Star For This 
+Repository If You Found These 
+Program/Programs Beneficial. Thank You!*/
+
+#include <iostream>
+using namespace std;
+
+struct node {
+	int x;
+	node* next;
+	node* previous;
+};
+
+node* head = NULL;
+
+void storeNodes () {
+	head = new node;
+	head->x = 10;
+	head->previous = NULL;
+	node* n1 = new node;
+	n1->x = 20;
+	n1->previous = head;
+	head->next = n1;
+	node* n2 = new node;
+	n2->x = 30;
+	n2->previous = n1;
+	n1->next = n2;
+	node* tail = new node;
+	tail->x = 40;
+	tail->previous = n2;
+	n2->next = tail;
+	tail->next = NULL;
+}
+
+void replaceItem () {
+	int sit;
+	cout << "Enter Search Item To Be Replaced:" << endl;
+	cin >> sit;
+	node* search = head;
+	while (search != NULL) {
+		if (search->x == sit) {
+			break;
+		}
+		search = search->next;
+	}
+	if (search == NULL) {
+		cout << "Item Not Found!" << endl;
+		return;
+	} else {
+		node* temp = new node;
+		cout << "Enter Item To Replace " << sit << ":" << endl;
+		cin >> temp->x;
+		if (search == head) {
+			temp->previous = NULL;
+			temp->next = head->next;
+			head->next->previous = temp;
+			head = temp;
+		} else if (search->next == NULL) {
+			temp->next = NULL;
+			temp->previous = search->previous;
+			search->previous->next = temp;
+		} else {
+			temp->next = search->next;
+			temp->previous = search->previous;
+			search->previous->next = temp;
+			search->next->previous = temp;
+		}
+		delete search;
+		cout << "Item Successfully Replaced!" << endl;
+	}
+}
+
+void display () {
+	node* dis = head;
+	while (dis != NULL) {
+		cout << dis->x << "  ";
+		dis = dis->next;
+	}
+	cout << endl;
+}
+
+int main () {
+	storeNodes();
+	replaceItem();
+	display();
+}
