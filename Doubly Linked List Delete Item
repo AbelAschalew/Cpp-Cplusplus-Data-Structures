@@ -1,0 +1,92 @@
+/* Dear Fellow Programmers I Hope You Find 
+This & Other Programs I Released Helpful. 
+Nothing Pleasure Me Morethan Helping Others. 
+I Expect Only One Thing From You, Show Your
+Support By Giving a Star For This 
+Repository If You Found These 
+Program/Programs Beneficial. Thank You!*/
+
+#include <iostream>
+using namespace std;
+
+struct node {
+	int x;
+	node* next;
+	node* previous;
+};
+
+node* head = NULL;
+
+void storeNodes () {
+	head = new node;
+	head->x = 10;
+	head->previous = NULL;
+	node* n1 = new node;
+	n1->x = 20;
+	n1->previous = head;
+	head->next = n1;
+	node* n2 = new node;
+	n2->x = 30;
+	n2->previous = n1;
+	n1->next = n2;
+	node* tail = new node;
+	tail->x = 40;
+	tail->previous = n2;
+	n2->next = tail;
+	tail->next = NULL;
+}
+
+void deleteItem () {
+	int sit;
+	cout << "Enter Search Item To Be Deleted:" << endl;
+	cin >> sit;
+	node* search = head;
+	while (search != NULL) {
+		if (search->x == sit) {
+			break;
+		}
+		search = search->next;
+	}
+	if (search == NULL) {
+		cout << "Item Not Found!" << endl;
+		return;
+	} else {
+		char Q;
+		cout << "Delete " << sit << "? ('Y'/'N'):" << endl;
+		cin >> Q;
+		if (Q=='N' || Q=='n') {
+			cout << "Delete Canceled!" << endl;
+			return;
+		} else if (Q=='Y' || Q=='y') {
+			if (search == head) {
+				head = head->next;
+				head->previous = NULL;
+			} else if (search->next == NULL) {
+				search->previous->next = NULL;
+			} else {
+				search->previous->next = search->next;
+				search->next->previous = search->previous;
+			}
+			delete search;
+			cout << "Item Successfully Deleted!" << endl;
+		} else {
+			cout << "Invalid Answer!" << endl;
+			return;
+		}
+	}
+}
+
+void display () {
+	node* dis = head;
+	while (dis != NULL) {
+		cout << dis->x << "  ";
+		dis = dis->next;
+	}
+	cout << endl;
+}
+
+int main () {
+	storeNodes();
+	deleteItem();
+	display();
+}
