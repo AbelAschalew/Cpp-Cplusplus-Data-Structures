@@ -1,0 +1,120 @@
+/* Dear Fellow Programmers I Hope You Find 
+This & Other Programs I Released Helpful. 
+Nothing Pleasure Me Morethan Helping Others. 
+I Expect Only One Thing From You, Show Your
+Support By Giving a Star For This 
+Repository If You Found These 
+Program/Programs Beneficial. Thank You!*/
+
+#include <iostream>
+using namespace std;
+
+struct node {
+	char x;
+	int priority;
+	node* next;
+	node* previous;
+};
+
+node* front = NULL;
+node* rear = NULL;
+
+void append () {
+	if (front == NULL) {
+		front = new node;
+		cout << "Enter Item:" << endl;
+		cin >> front->x;
+		cout << "Enter Priority:" << endl;
+		cin >> front->priority;
+		front->previous = NULL;
+		front->next = NULL;
+		rear = front;
+	} else {
+		node* temp = new node;
+		cout << "Enter Item:" << endl;
+		cin >> temp->x;
+		cout << "Enter Priority:" << endl;
+		cin >> temp->priority;
+		node* search = front;
+		while (search != NULL) {
+			if (temp->priority > search->priority) {
+				break;
+			}
+			search = search->next;
+		}
+		if (search == NULL) {
+			temp->next = NULL;
+			temp->previous = rear;
+			rear->next = temp;
+			rear = temp;
+		} else if (search == front) {
+			temp->previous = NULL;
+			temp->next = front;
+			front->previous = temp;
+			front = temp;
+		} else {
+			temp->previous = search->previous;
+			temp->next = search;
+			search->previous->next = temp;
+			search->previous = temp;
+		}
+	}
+	cout << "Item Successfully Appended / Enqueued!" << endl;
+}
+
+void remove () {
+	if (front == NULL) {
+		cout << "Queue Is Empty!" << endl;
+	} else {
+		node* temp = front;
+		front = front->next;
+		if (front != NULL) {
+			front->previous = NULL;
+		}
+		delete temp;
+	}
+}
+
+void display () {
+	if (front == NULL) {
+		cout << "Queue Is Empty!" << endl;
+	} else {
+		node* dis = front;
+		cout << "Front => ";
+		while (dis != NULL) {
+			cout << dis->x << "|" << dis->priority << "  ";
+			dis = dis->next;
+		}
+		cout << " <= Rear" << endl;
+	}
+}
+
+int main () {
+	int c;
+	
+	do {
+		cout << "1. Append / Enqueue" << endl;
+		cout << "2. Remove / Dequeue" << endl;
+		cout << "3. Display" << endl;
+		cout << "4. EXIT" << endl;
+		cout << "Enter Your Choice:" << endl;
+		cin >> c;
+		
+		switch (c) {
+			case 1:
+				append();
+				break;
+			case 2:
+				remove();
+				break;
+			case 3:
+				display();
+				break;
+			case 4:
+				cout << endl << "EXITED!" << endl << endl;
+				break;
+			default:
+				cout << endl << "Invalid Choice!" << endl << endl;
+		}
+	} while (c != 4);
+}
