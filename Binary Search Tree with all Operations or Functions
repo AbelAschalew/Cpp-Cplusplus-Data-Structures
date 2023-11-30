@@ -1,0 +1,288 @@
+/* Dear Fellow Programmers I Hope You Find 
+This & Other Programs I Released Helpful. 
+Nothing Pleasure Me Morethan Helping Others. 
+I Expect Only One Thing From You, Show Your
+Support By Giving a Star For This 
+Repository If You Found These 
+Program/Programs Beneficial. Thank You!*/
+
+#include <iostream>
+using namespace std;
+
+struct node {
+	int x;
+	node* left;
+	node* right;
+};
+
+node* root = NULL;
+
+int cnt = 0;
+
+void insert () {
+	cout << endl;
+	if (root == NULL) {
+		root = new node;
+		cout << "Enter Item:" << endl;
+		cin >> root->x;
+		root->left = NULL;
+		root->right = NULL;
+	} else {
+		node* temp = new node;
+		cout << "Enter Item:" << endl;
+		cin >> temp->x;
+		temp->left = NULL;
+		temp->right = NULL;
+		node* search = root;
+		node* search1;
+		while (search != NULL) {
+			search1 = search;
+			if (temp->x < search->x) {
+				search = search->left;
+			} else {
+				search = search->right;
+			}
+		}
+		if (temp->x < search1->x) {
+			search1->left = temp;
+		} else {
+			search1->right = temp;
+		}
+	}
+	cout << endl << "Item Successfully Inserted!" << endl;
+	cout << endl;
+}
+
+void preOrder (node* n) {
+	if (root == NULL) {
+		cout << endl << "Tree Is Empty!" << endl << endl;
+		return;
+	}
+	if (n == NULL) {
+		return;
+	}
+	cout << n->x << "   ";
+	preOrder (n->left);
+	preOrder (n->right);
+}
+
+void count (node* n) {
+	if (n == NULL) {
+		return;
+	}
+	count (n->left);
+	::cnt++;
+	count (n->right);
+}
+
+void binarySearch () {
+	cout << endl;
+	if (root == NULL) {
+		cout << endl << "Tree Is Empty!" << endl << endl;
+		return;
+	} else {
+		int sitem;
+		cout << "Enter Search Item:" << endl;
+		cin >> sitem;
+		node* search = root;
+		int lvl = 0;
+		while (search != NULL) {
+			lvl++;
+			if (search->x == sitem) {
+				cout << endl << "Item Found (" << search->x << ") at Level -> " << lvl << endl;
+				break;
+			} else if (search->x > sitem) {
+				search = search->left;
+			} else {
+				search = search->right;
+			}
+		}
+		if (search == NULL) {
+			cout << endl << "Item Not Found!" << endl;
+		}
+	}
+	cout << endl;
+}
+
+int height (node* n) {
+	if (root == NULL) {
+		return -1;
+	}
+	if (n == NULL) {
+		return 0;
+	}
+	int left;
+	int right;
+	left = height (n->left);
+	right = height (n->right);
+	if (left > right) {
+		return left+1;
+	} else {
+		return right+1;
+	}
+}
+
+void currentLevel (node* n, int level) {
+	if (n == NULL) {
+		return;
+	}
+	if (level == 1) {
+		cout << n->x << "   ";
+	} else if (level > 1) {
+		currentLevel (n->left, level-1);
+		currentLevel (n->right, level-1);
+	}
+}
+
+void nodesPerLevel (node* n) {
+	cout << endl;
+	if (root == NULL) {
+		cout << endl << "Tree Is Empty!" << endl << endl;
+		return;
+	}
+	int h = height (root);
+	cout << endl << "********** Nodes Per Level **********" << endl;
+	for (int i=1; i<=h; i++) {
+		cout << "Level - " << i << ": ";
+		currentLevel (n, i);
+		cout << endl;
+	}
+	cout << endl;
+}
+
+void childOfNode () {
+	cout << endl;
+	if (root == NULL) {
+		cout << endl << "Tree Is Empty!" << endl;
+	} else {
+		int sitem;
+		cout << "Enter Search Item:" << endl;
+		cin >> sitem;
+		node* search = root;
+		while (search != NULL) {
+			if (sitem == search->x) {
+				break;
+			} else if (sitem < search->x) {
+				search = search->left;
+			} else {
+				search = search->right;
+			}
+		}
+		if (search == NULL) {
+			cout << endl << "Item Not Found!" << endl;
+		} else {
+			if (search->left!=NULL && search->right!=NULL) {
+				cout << "Item Found: Left Child Is -> " << search->left->x << " | Right Child Is -> " << search->right->x << endl; 
+			} else if (search->left==NULL && search->right!=NULL) {
+				cout << "Item Found: No Left Child | Right Child Is -> " << search->right->x << endl;
+			} else if (search->left!=NULL && search->right==NULL) {
+				cout << "Item Found: Left Child Is -> " << search->left->x << " | No Right Child" << endl;
+			} else {
+				cout << "Item Found: No Left Child | No Right Child" << endl;
+			}
+			cout << endl;
+		}
+	}
+	cout << endl;
+}
+
+void inOrder (node* n) {
+	if (root == NULL) {
+		cout << endl << "Tree Is Empty!" << endl << endl;
+		return;
+	}
+	if (n == NULL) {
+		return;
+	}
+	inOrder (n->left);
+	cout << n->x << "   ";
+	inOrder (n->right);
+}
+
+void postOrder (node* n) {
+	if (root == NULL) {
+		cout << endl << "Tree Is Empty!" << endl << endl;
+		return;
+	}
+	if (n == NULL) {
+		return;
+	}
+	postOrder(n->left);
+	postOrder(n->right);
+	cout << n->x << "   ";
+}
+
+int main () {
+	int c;
+	
+	do {
+		cout << "1. Insert" << endl;
+		cout << "2. Preorder" << endl;
+		cout << "3. Count" << endl;
+		cout << "4. Search" << endl;
+		cout << "5. Height Of Tree" << endl;
+		cout << "6. Nodes Per Level" << endl;
+		cout << "7. Children Of A Node" << endl;
+		cout << "8. Inorder" << endl;
+		cout << "9. Postorder" << endl;
+		cout << "10. EXIT" << endl;
+		cout << "Enter Choice:" << endl;
+		cin >> c;
+		
+		switch (c) {
+			case 1:
+				insert ();
+				break;
+			case 2:
+				cout << endl;
+				cout << endl << "--------------- PreOrder Traversal ---------------" << endl;
+				preOrder (root);
+				cout << endl;
+				break;
+			case 3:
+				cout << endl;
+				count (root);
+				cout << endl << "Number Of Nodes = " << cnt << endl;
+				::cnt = 0;
+				cout << endl;
+				break;
+			case 4:
+				binarySearch ();
+				break;
+			case 5:
+				cout << endl;
+				int res;
+				res = height (root);
+				if (res == -1) {
+					cout << endl << "Tree Is Empty!" << endl;
+				} else {
+					cout << endl << "Height Of Tree = " << res << endl;
+				}
+				cout << endl;
+				break;
+			case 6:
+				nodesPerLevel (root);
+				break;
+			case 7:
+				childOfNode ();
+				break;
+			case 8:
+				cout << endl;
+				cout << endl << "******************** InOrder Traversal ********************" << endl;
+				inOrder (root);
+				cout << endl;
+				break;
+			case 9:
+				cout << endl;
+				cout << endl << "******************** PostOrder Traversal ********************" << endl;
+				postOrder(root);
+				cout << endl;
+				break;
+			case 10:
+				cout << endl << endl << "EXITED!" << endl << endl;
+				break;
+			default:
+				cout << endl << endl << "Invalid Choice!" << endl << endl;
+		}
+	} while (c != 10);
+}
